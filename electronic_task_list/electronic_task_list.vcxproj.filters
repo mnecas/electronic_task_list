@@ -13,39 +13,39 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\render">
+    <Filter Include="Resource Files\render">
       <UniqueIdentifier>{777321c9-143d-4263-9490-0a12dca60f9b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\run">
+    <Filter Include="Resource Files\run">
       <UniqueIdentifier>{3f0e0b67-5470-4753-9b65-06c35831e62d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\utils">
+    <Filter Include="Resource Files\utils">
       <UniqueIdentifier>{b4525543-c8d0-4fd1-a007-914a4c84e038}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\electronical_task_list\electronical_task_list\main.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\electronical_task_list\electronical_task_list\render.c">
-      <Filter>Source Files\render</Filter>
+      <Filter>Resource Files\render</Filter>
     </ClCompile>
     <ClCompile Include="..\..\electronical_task_list\electronical_task_list\run.c">
-      <Filter>Source Files\run</Filter>
+      <Filter>Resource Files\run</Filter>
     </ClCompile>
     <ClCompile Include="..\..\electronical_task_list\electronical_task_list\utils.c">
-      <Filter>Source Files\utils</Filter>
+      <Filter>Resource Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\electronical_task_list\electronical_task_list\main.c">
+      <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\electronical_task_list\electronical_task_list\render.h">
-      <Filter>Source Files\render</Filter>
+      <Filter>Resource Files\render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\electronical_task_list\electronical_task_list\run.h">
-      <Filter>Source Files\run</Filter>
+      <Filter>Resource Files\run</Filter>
     </ClInclude>
     <ClInclude Include="..\..\electronical_task_list\electronical_task_list\utils.h">
-      <Filter>Source Files\utils</Filter>
+      <Filter>Resource Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

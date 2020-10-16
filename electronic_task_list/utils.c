@@ -45,7 +45,7 @@ int number_of_days(int month, int year)
     }
     return days[month];
 }
-void get_days_in_week(int day, int month, int year, int* resp)
+void get_days_in_week(int day, int month, int year, int resp[])
 {
 
     int _numberDay = number_of_weekday(day, month, year);

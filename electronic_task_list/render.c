@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "utils.h"
 
 #define WHITE_BACK "\x1b[7m"
 #define RESET "\x1b[0m"
@@ -79,14 +80,13 @@ void render_week(int day, int month, int year)
 
     // Redner header
     render_header(month, year);
-    int* daysInWeek = (int*)calloc(7, sizeof(int));
+    int daysInWeek[7];
     int _numberDay = number_of_weekday(day, month, year);
     int _numberOfDays = number_of_days(month, year);
     get_days_in_week(day, month, year, daysInWeek);
     for (int i = 0; i < 7; i++) {
-        if (*daysInWeek == day) printf(WHITE_BACK "\t%d" RESET, *daysInWeek);
-        else printf("\t%d", *daysInWeek);
-        daysInWeek++;
+        if (daysInWeek[i] == day) printf(WHITE_BACK "\t%d" RESET, daysInWeek[i]);
+        else printf("\t%d", daysInWeek[i]);
     }
     render_options();
 }

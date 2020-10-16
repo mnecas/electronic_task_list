@@ -130,9 +130,9 @@ void run_week(Date* date)
         }
     }
     if ((char)ch == 'm')
-        run_month(date->day, date->month, date->year);
+        run_month(date);
     else if ((char)ch == 'd')
-        run_day(date->day, date->month, date->year);
+        run_day(date);
 }
 void run(Date *date) {
     run_day(date);

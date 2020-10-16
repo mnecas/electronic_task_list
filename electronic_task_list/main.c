@@ -1,7 +1,6 @@
+#include "common.h"
 #include <time.h>
 #include <stdio.h>
-#include "structs.c"
-#include "run.h"
 
 int main()
 {

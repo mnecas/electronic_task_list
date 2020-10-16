@@ -145,10 +145,8 @@
     <ClCompile Include="utils.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="render.h" />
-    <ClInclude Include="run.h" />
+    <ClInclude Include="common.h" />
     <ClInclude Include="structs.c" />
-    <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

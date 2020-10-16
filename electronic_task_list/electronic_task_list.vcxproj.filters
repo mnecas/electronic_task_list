@@ -13,39 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\render">
-      <UniqueIdentifier>{88e5c103-f288-4fd2-9d02-d20869e6fd33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\run">
-      <UniqueIdentifier>{25d7a322-e3bf-4794-add9-db31a1b4698f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\utils">
-      <UniqueIdentifier>{6297b456-54bb-4e84-b44c-98d0a6699f5c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="utils.c">
-      <Filter>Source Files\utils</Filter>
-    </ClCompile>
     <ClCompile Include="run.c">
-      <Filter>Source Files\run</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="render.c">
-      <Filter>Source Files\render</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.c">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="utils.h">
-      <Filter>Source Files\utils</Filter>
+    <ClInclude Include="structs.c">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="render.h">
-      <Filter>Source Files\render</Filter>
-    </ClInclude>
-    <ClInclude Include="run.h">
-      <Filter>Source Files\run</Filter>
+    <ClInclude Include="common.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,16 +1,10 @@
+#include "common.h"
 #include <conio.h>
 
-#include "render.h"
-#include "utils.h"
-
-void run_day(int day, int month, int year);
-void run_week(int day, int month, int year);
-void run_month(int day, int month, int year);
-
-void run_week(int day, int month, int year)
+void run_month(Date *date)
 {
 
-    render_week(day, month, year);
+    render_month(date);
     int ch;
     while ((ch = _getch()) != 27)
     {
@@ -21,111 +15,23 @@ void run_week(int day, int month, int year)
             {
             case 72:
                 // Arrow up
-                update_date(&day, &month, &year, -7);
-                render_week(day, month, year);
+                update_date(date, -7);
+                render_month(date);
                 break;
             case 75:
                 // Arrow left
-                update_date(&day, &month, &year, -1);
-                render_week(day, month, year);
+                update_date(date, -1);
+                render_month(date);
                 break;
             case 80:
                 // Arrow down
-                update_date(&day, &month, &year, 7);
-                render_week(day, month, year);
+                update_date(date, 7);
+                render_month(date);
                 break;
             case 77:
                 // Arrow right
-                update_date(&day, &month, &year, 1);
-                render_week(day, month, year);
-                break;
-            }
-        }
-        else if ((char)ch == 'd' || (char)ch == 'm')
-        {
-            break;
-        }
-    }
-    if ((char)ch == 'm')
-        run_month(day, month, year);
-    else if ((char)ch == 'd')
-        run_day(day, month, year);
-}
-void run_day(int day, int month, int year)
-{
-
-    render_day(day, month, year);
-    int ch;
-    while ((ch = _getch()) != 27)
-    {
-        if (ch == 0 || ch == 224)
-        {
-            int arrow = _getch();
-            switch (arrow)
-            {
-            case 72:
-                // Arrow up
-                update_date(&day, &month, &year, -7);
-                render_day(day, month, year);
-                break;
-            case 75:
-                // Arrow left
-                update_date(&day, &month, &year, -1);
-                render_day(day, month, year);
-                break;
-            case 80:
-                // Arrow down
-                update_date(&day, &month, &year, 7);
-                render_day(day, month, year);
-                break;
-            case 77:
-                // Arrow right
-                update_date(&day, &month, &year, 1);
-                render_day(day, month, year);
-                break;
-            }
-        }
-        else if ((char)ch == 'w' || (char)ch == 'm')
-        {
-            break;
-        }
-    }
-    if ((char)ch == 'w')
-        run_week(day, month, year);
-    else if ((char)ch == 'm')
-        run_month(day, month, year);
-}
-void run_month(int day, int month, int year)
-{
-
-    render_month(day, month, year);
-    int ch;
-    while ((ch = _getch()) != 27)
-    {
-        if (ch == 0 || ch == 224)
-        {
-            int arrow = _getch();
-            switch (arrow)
-            {
-            case 72:
-                // Arrow up
-                update_date(&day, &month, &year, -7);
-                render_month(day, month, year);
-                break;
-            case 75:
-                // Arrow left
-                update_date(&day, &month, &year, -1);
-                render_month(day, month, year);
-                break;
-            case 80:
-                // Arrow down
-                update_date(&day, &month, &year, 7);
-                render_month(day, month, year);
-                break;
-            case 77:
-                // Arrow right
-                update_date(&day, &month, &year, 1);
-                render_month(day, month, year);
+                update_date(date, 1);
+                render_month(date);
                 break;
             }
         }
@@ -135,10 +41,99 @@ void run_month(int day, int month, int year)
         }
     }
     if ((char)ch == 'w')
-        run_week(day, month, year);
+        run_week(date);
     else if ((char)ch == 'd')
-        run_day(day, month, year);
+        run_day(date);
 }
-void run(int day, int month, int year) {
-    run_day(day, month, year);
+void run_day(Date * date)
+{
+
+    render_day(date);
+    int ch;
+    while ((ch = _getch()) != 27)
+    {
+        if (ch == 0 || ch == 224)
+        {
+            int arrow = _getch();
+            switch (arrow)
+            {
+            case 72:
+                // Arrow up
+                update_date(date, -7);
+                render_day(date);
+                break;
+            case 75:
+                // Arrow left
+                update_date(date, -1);
+                render_day(date);
+                break;
+            case 80:
+                // Arrow down
+                update_date(date, 7);
+                render_day(date);
+                break;
+            case 77:
+                // Arrow right
+                update_date(date, 1);
+                render_day(date);
+                break;
+            }
+        }
+        else if ((char)ch == 'w' || (char)ch == 'm')
+        {
+            break;
+        }
+    }
+    if ((char)ch == 'w')
+        run_week(date);
+    else if ((char)ch == 'm')
+        run_month(date);
+}
+
+void run_week(Date* date)
+{
+    printf("%d", date->day);
+    render_week(date);
+    int ch;
+    while ((ch = _getch()) != 27)
+    {
+        if (ch == 0 || ch == 224)
+        {
+            int arrow = _getch();
+            switch (arrow)
+            {
+            case 72:
+                // Arrow up
+                update_date(date, -7);
+                render_week(date);
+                break;
+            case 75:
+                // Arrow left
+                update_date(date, -1);
+                render_week(date);
+                break;
+            case 80:
+                // Arrow down
+                update_date(date, 7);
+                render_week(date);
+                break;
+            case 77:
+                // Arrow right
+                update_date(date, 1);
+                render_week(date);
+                break;
+            }
+        }
+        else if ((char)ch == 'd' || (char)ch == 'm')
+        {
+            break;
+        }
+    }
+    if ((char)ch == 'm')
+        run_month(date);
+    else if ((char)ch == 'd')
+        run_day(date);
+}
+void run(Date *date) {
+    run_day(date);
 }

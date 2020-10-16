@@ -1,3 +1,4 @@
+#include "common.h"
 
 const char* months[13] = { "", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 
@@ -45,25 +46,25 @@ int number_of_days(int month, int year)
     }
     return days[month];
 }
-void get_days_in_week(int day, int month, int year, int resp[])
+void get_days_in_week(Date * date, int resp[])
 {
 
-    int _numberDay = number_of_weekday(day, month, year);
-    int _numberOfDays = number_of_days(month, year);
+    int _numberDay = number_of_weekday(date->day, date->month, date->year);
+    int _numberOfDays = number_of_days(date->month, date->year);
 
     int _numberOfDays2;
-    if (month - 1 > 0)
-        _numberOfDays2 = number_of_days(month - 1, year);
+    if (date->month - 1 > 0)
+        _numberOfDays2 = number_of_days(date->month - 1, date->year);
     else
-        _numberOfDays2 = number_of_days(12, year);
+        _numberOfDays2 = number_of_days(12, date->year);
 
     int counter = 0;
 
     for (int i = 0; i < 7; i++)
     {
-        int x = day - _numberDay + i;
+        int x = date->day - _numberDay + i;
         int y = _numberOfDays + 1;
-        int _day = (day - _numberDay + i) % (number_of_days(month, year) + 1);
+        int _day = (date->day - _numberDay + i) % (number_of_days(date->month, date->year) + 1);
         if (x >= y)
         {
             _day = ++counter;
@@ -75,31 +76,31 @@ void get_days_in_week(int day, int month, int year, int resp[])
         resp[i] = _day;
     }
 }
-void update_date(int* day, int* month, int* year, int change)
+void update_date(Date *date, int change)
 {
-    int _numberOfDays = number_of_days(*month, *year);
-    int original = *day;
-    *day += change;
-    if (*day <= 0)
+    int _numberOfDays = number_of_days(date->month, date->year);
+    int original = date->day;
+    date->day += change;
+    if (date->day <= 0)
     {
-        *month -= 1;
-        if (*month == 0)
+        date->month -= 1;
+        if (date->month == 0)
         {
-            *month = 12;
-            *year -= 1;
-            *day += 1;
+            date->month = 12;
+            date->year -= 1;
+            date->day += 1;
         }
-        *day = number_of_days(*month, *year) + *day;
+        date->day = number_of_days(date->month, date->year) + date->day;
     }
-    else if (*day > number_of_days(*month, *year))
+    else if (date->day > number_of_days(date->month, date->year))
     {
-        *month += 1;
-        if (*month == 13)
+        date->month += 1;
+        if (date->month == 13)
         {
-            *month = 1;
-            *year += 1;
-            *day -= 1;
+            date->month = 1;
+            date->year += 1;
+            date->day -= 1;
         }
-        *day = *day - _numberOfDays;
+        date->day -= _numberOfDays;
     }
 }

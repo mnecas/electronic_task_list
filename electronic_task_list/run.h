@@ -1,2 +1,9 @@
 #pragma once
-void run(int day, int month, int year);
+
+#include "render.h"
+#include "utils.h"
+
+void run(Date *date);
+void run_day(Date* date);
+void run_week(Date* date);
+void run_month(Date* date);

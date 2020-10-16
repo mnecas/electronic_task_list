@@ -47,5 +47,8 @@
     <ClInclude Include="run.h">
       <Filter>Source Files\run</Filter>
     </ClInclude>
+    <ClInclude Include="structs.c">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

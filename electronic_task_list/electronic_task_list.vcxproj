@@ -139,15 +139,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\electronical_task_list\electronical_task_list\main.c" />
-    <ClCompile Include="..\..\electronical_task_list\electronical_task_list\render.c" />
-    <ClCompile Include="..\..\electronical_task_list\electronical_task_list\run.c" />
-    <ClCompile Include="..\..\electronical_task_list\electronical_task_list\utils.c" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="render.c" />
+    <ClCompile Include="run.c" />
+    <ClCompile Include="utils.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\electronical_task_list\electronical_task_list\render.h" />
-    <ClInclude Include="..\..\electronical_task_list\electronical_task_list\run.h" />
-    <ClInclude Include="..\..\electronical_task_list\electronical_task_list\utils.h" />
+    <ClInclude Include="render.h" />
+    <ClInclude Include="run.h" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

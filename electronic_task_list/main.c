@@ -4,7 +4,7 @@
 
 int main()
 {
-
+    // zmena
     struct tm newtime;
     time_t now = time(0);
     localtime_s(&newtime, &now);

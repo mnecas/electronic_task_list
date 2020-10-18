@@ -1,5 +1,11 @@
 #pragma once
-
+// TODO split to multiple header files and use: 
+/*
+#ifndef HEADERNAME
+#define HEADERNAME
+...
+#endif
+*/
 #include "structs.c"
 
 void render_month(Date* date);

@@ -86,7 +86,7 @@ void render_week(Date * date)
     //int _numberOfDays = number_of_days(date->month, date->year);
     get_days_in_week(date, daysInWeek);
     for (int i = 0; i < 7; i++) {
-        if (daysInWeek[i] == (*date).day) printf(WHITE_BACK "\t%d" RESET, daysInWeek[i]);
+        if (daysInWeek[i] == date->day) printf(WHITE_BACK "\t%d" RESET, daysInWeek[i]);
         else printf("\t%d", daysInWeek[i]);
     }
     render_options();

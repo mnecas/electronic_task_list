@@ -11,9 +11,14 @@ int main()
 
     Date date;
     date.day = newtime.tm_mday ;
-    date.month = newtime.tm_mon;
+    date.month = newtime.tm_mon + 1;
     date.year = newtime.tm_year + 1900;
     
+    Task list_of_tasks[10];
+
+
+
+
     Task first;
     first.date = date;
     first.time = 12;

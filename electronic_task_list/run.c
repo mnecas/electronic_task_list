@@ -84,10 +84,8 @@ void run_day(Date * date)
             break;
         }
     }
-    if ((char)ch == 'w')
-        run_week(date);
-    else if ((char)ch == 'm')
-        run_month(date);
+    if ((char)ch == 'w') run_week(date);
+    else if ((char)ch == 'm') run_month(date);
 }
 
 void run_week(Date* date)
@@ -129,10 +127,8 @@ void run_week(Date* date)
             break;
         }
     }
-    if ((char)ch == 'm')
-        run_month(date);
-    else if ((char)ch == 'd')
-        run_day(date);
+    if ((char)ch == 'm') run_month(date);
+    else if ((char)ch == 'd') run_day(date);
 }
 void run(Date *date) {
     run_day(date);

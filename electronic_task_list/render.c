@@ -43,7 +43,6 @@ void render_month(Date* date)
 
     int _numberDay = number_of_weekday(1, date->month, date->year);
     int _numberOfDays = number_of_days(date->month, date->year);
-
     // Padding
     for (int i = 0; i < _numberDay; i++)
         printf("\t");
@@ -89,5 +88,6 @@ void render_week(Date * date)
         if (daysInWeek[i] == date->day) printf(WHITE_BACK "\t%d" RESET, daysInWeek[i]);
         else printf("\t%d", daysInWeek[i]);
     }
+    
     render_options();
 }

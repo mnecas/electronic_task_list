@@ -8,6 +8,8 @@ int year_code(int year)
 }
 int number_of_weekday(int day, int month, int year)
 {
+    // TODO: when for diffrent years than 2020
+
     /*
     Input:
         int day 1-31;
@@ -86,20 +88,24 @@ void update_date(Date *date, int change)
         date->month -= 1;
         if (date->month == 0)
         {
+            date->year--;
             date->month = 12;
-            date->year -= 1;
-            date->day += 1;
         }
-        date->day = number_of_days(date->month, date->year) + date->day;
+        if (date->month == 2 && is_leap_year(date->year)) {
+            date->day--;
+        }
+        date->day += number_of_days(date->month, date->year);
     }
-    else if (date->day > number_of_days(date->month, date->year))
+    else if (date->day > _numberOfDays)
     {
         date->month += 1;
         if (date->month == 13)
         {
+            date->year++;
             date->month = 1;
-            date->year += 1;
-            date->day -= 1;
+        }
+        if (date->month == 2 && is_leap_year(date->year)) {
+            date->day++;
         }
         date->day -= _numberOfDays;
     }

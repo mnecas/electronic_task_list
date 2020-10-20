@@ -41,11 +41,11 @@ void render_month(Date* date)
     // Redner header
     render_header(date);
 
-    int _numberDay = number_of_weekday(1, date->month, date->year);
+    int _numberDay = number_of_weekday(1, date->month, date->year)-1;
     int _numberOfDays = number_of_days(date->month, date->year);
     // Padding
-    for (int i = 0; i < _numberDay; i++)
-        printf("\t");
+
+    for (int i = 0; i < (_numberDay+7)%7; i++) printf("\t");
 
     for (int i = 1; i < _numberOfDays + 1; i++)
     {

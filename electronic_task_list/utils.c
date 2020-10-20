@@ -18,9 +18,13 @@ int number_of_weekday(int day, int month, int year)
     Retrun:
         0 - for Sunday and 6 for Saturday
     */
-    int monthCodes[13] = { 0, 0, 3, 3, 6, 1, 4, 6, 2, 5, 0, 3, 5 };
-    int centuryCode = 4;
-    return (year_code(year) + monthCodes[month] + centuryCode + day) % 7;
+    int adjustment, mm, yy;
+
+    adjustment = (14 - month) / 12;
+    mm = month + 12 * adjustment - 2;
+    yy = year - adjustment;
+    return (day + (13 * mm - 1) / 5 +
+        yy + yy / 4 - yy / 100 + yy / 400) % 7;
 }
 int is_leap_year(int year)
 {

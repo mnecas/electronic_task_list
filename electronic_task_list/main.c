@@ -18,7 +18,6 @@ int main()
 
 
 
-
     Task first;
     first.date = date;
     first.time = 12;
@@ -28,12 +27,6 @@ int main()
     first.priority = 0;
 
     date.day = newtime.tm_mday+1;
-
-
-    printf("%d\n", date.day);
-    printf("%d\n", first.date.day);
-
-
     run(&date);
     
     return 0;

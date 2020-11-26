@@ -14,7 +14,7 @@ void render_header(Date* date)
         printf("-");
     printf("\n");
 }
-void render_options()
+void render_options(enum runType format)
 {
 
     printf("\n\n");
@@ -28,9 +28,10 @@ void render_options()
     printf("\t Control options:");
     printf("\n");
     printf("\t a - add");
-    printf("\t c - copy");
-    printf("\t m - move");
-    printf("\t f - find");
+    if(format != month){
+        printf("\t c - copy");
+        printf("\t e - edit");
+    }
     printf("\n");
 }
 void render_month(Date* date)
@@ -62,7 +63,7 @@ void render_month(Date* date)
             printf("\n");
         }
     }
-    render_options();
+    render_options(month);
 }
 void render_day(Date* date)
 {
@@ -71,7 +72,7 @@ void render_day(Date* date)
     for (int i = 0; i < 10; i++)
         printf("\t" WHITE_BACK "test\n" RESET);
 
-    render_options();
+    render_options(day);
 }
 void render_week(Date * date)
 {
@@ -89,5 +90,11 @@ void render_week(Date * date)
         else printf("\t%d", daysInWeek[i]);
     }
     
-    render_options();
+    render_options(week);
+}
+
+void render(Date* date, enum typeRun format) {
+    if (format == day) render_day(date);
+    else if (format == week) render_week(date);
+    else if (format == month) render_month(date);
 }

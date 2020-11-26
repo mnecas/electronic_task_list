@@ -14,6 +14,8 @@ int main()
     date.month = newtime.tm_mon + 1;
     date.year = newtime.tm_year + 1900;
     
+
+
     Task list_of_tasks[10];
 
 
@@ -27,7 +29,8 @@ int main()
     first.priority = 0;
 
     date.day = newtime.tm_mday+1;
-    run(&date);
-    
+
+    run(&date, week);
+
     return 0;
 }

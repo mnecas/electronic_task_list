@@ -1,4 +1,6 @@
 #include "common.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 const char* months[13] = { "", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 
@@ -46,23 +48,18 @@ int number_of_days(int month, int year)
 
     */
     int days[13] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    if (is_leap_year(year))
-    {
-        days[2] = 29;
-    }
+    if (is_leap_year(year)) days[2] = 29;
     return days[month];
 }
-void get_days_in_week(Date * date, int resp[])
+void get_days_in_week(Date *date, int resp[])
 {
 
     int _numberDay = number_of_weekday(date->day, date->month, date->year);
     int _numberOfDays = number_of_days(date->month, date->year);
 
     int _numberOfDays2;
-    if (date->month - 1 > 0)
-        _numberOfDays2 = number_of_days(date->month - 1, date->year);
-    else
-        _numberOfDays2 = number_of_days(12, date->year);
+    if (date->month - 1 > 0) _numberOfDays2 = number_of_days(date->month - 1, date->year);
+    else _numberOfDays2 = number_of_days(12, date->year);
 
     int counter = 0;
 
@@ -71,19 +68,14 @@ void get_days_in_week(Date * date, int resp[])
         int x = date->day - _numberDay + i;
         int y = _numberOfDays + 1;
         int _day = (date->day - _numberDay + i) % (number_of_days(date->month, date->year) + 1);
-        if (x >= y)
-        {
-            _day = ++counter;
-        }
-        else if (x <= 0)
-        {
-            _day = _numberOfDays2 + _day;
-        }
+        if (x >= y) _day = ++counter;
+        else if (x <= 0) _day = _numberOfDays2 + _day;
         resp[i] = _day;
     }
 }
 void update_date(Date *date, int change)
 {
+    selected = 0;
     int _numberOfDays = number_of_days(date->month, date->year);
     int original = date->day;
     date->day += change;
@@ -112,5 +104,73 @@ void update_date(Date *date, int change)
             date->day++;
         }
         date->day -= _numberOfDays;
+    }
+}
+
+void add_task(int id, int time, int duration, int finished, int priority, char* label, Date date, Task** task)
+{
+    Task* new_task = (Task*)malloc(sizeof(Task));
+    Task* this_task;
+
+    strcpy_s(new_task->label, STR_SIZE, label);
+    new_task->time = time;
+    new_task->duration = duration;
+    new_task->finished = finished;
+    new_task->priority = priority;
+    new_task->date = date;
+    new_task->id = id;
+    new_task->next = NULL;
+
+    if (*task == NULL)
+    {
+        *task = new_task;
+        return;
+    }
+    else if (new_task->id < (*task)->id)
+    {
+        new_task->next = *task;
+        *task = new_task;
+        return;
+    }
+    this_task = *task;
+    while (this_task) {
+        if (this_task->next == NULL)
+        {
+            this_task->next = new_task;
+            return;
+        }
+        else if (new_task->id < this_task->id)
+        {
+            new_task->next = this_task->next;
+            this_task->next = new_task;
+            return;
+        }
+        this_task = this_task->next;
+    }
+}
+
+
+void del_task(int id, Task** task)
+{
+
+    Task* new_task;
+
+    while (*task && (*task)->id == id)
+    {
+        Task* new_first = (*task)->next;
+        free(*task);
+        *task = new_first;
+    }
+
+    new_task = *task;
+    while (new_task && new_task->next)
+    {
+        if (new_task->next->id == id)
+        {
+            Task* next_new = new_task->next->next;
+            free(new_task->next);
+            new_task->next = next_new;
+        }
+        new_task = new_task->next;
     }
 }

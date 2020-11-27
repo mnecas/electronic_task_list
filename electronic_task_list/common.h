@@ -8,18 +8,22 @@
 */
 #include "structs.c"
 
-enum runType { day=0, week, month };
+#define STR_SIZE 32
 
-void render_month(Date* date);
-void render_day(Date* date);
-void render_week(Date* date);
+enum runType { day, week, month };
 
-void run(Date* date, enum runType format);
+void render(Date* date, Task** tasks, enum typeRun format, int move_task);
+void run(Date* date, Task** tasks, enum runType format);
+void add_task(int id, int time, int duration, int finished, int priority, char* label, Date date, Task** task);
+void del_task(int id, Task** task);
 
 int year_code(int year);
 int number_of_weekday(int day, int month, int year);
 int is_leap_year(int year);
 int number_of_days(int month, int year);
 void get_days_in_week(Date* date, int* resp);
-void update_date(Date *date, int change);
+void update_date(Date* date, int change);
 const char* get_month_name(int month);
+
+extern int selected;
+extern int selected_id;

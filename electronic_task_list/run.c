@@ -16,7 +16,8 @@ int get_max_id(Task** tasks) {
 	while (this_task && this_task->next) {
 		this_task = this_task->next;
 	}
-	return this_task->id;
+	if (this_task) return this_task->id;
+	else return 0;
 }
 
 void show_info(Date date, Task** tasks) {
@@ -133,7 +134,6 @@ void on_remove(Task** tasks) {
 	Task* this_task = get_Task_p(tasks);
 	del_task(this_task->id, tasks);
 }
-
 
 void run(Date* date, Task** tasks, enum runType format) {
 	render(date, tasks, format, 0);

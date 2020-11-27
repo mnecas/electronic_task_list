@@ -98,12 +98,13 @@ void render_day(Date* date, Task** tasks, int move_task)
 			}
 			//else if (check duration) printf("\t[-]");
 			else printf("\t[ ]");
-			printf(" %s\n", this_task->label);
+			printf(" (%d:00-%d:00) %s\n", this_task->time, this_task->time + this_task->duration, this_task->label);
 			count++;
 		}
 		this_task = this_task->next;
 	}
-
+	// TODO move this to function
+	// TODO add color by the priority
 	if (this_task && this_task->date.day == date->day && this_task->date.month == date->month && this_task->date.year == date->year) {
 		if (count == selected) {
 			printf("\t[x]");
@@ -111,7 +112,7 @@ void render_day(Date* date, Task** tasks, int move_task)
 		}
 		//else if (check duration) printf("\t[-]");
 		else printf("\t[ ]");
-		printf(" %s\n", this_task->label);
+		printf(" (%d:00-%d:00) %s\n", this_task->time, this_task->time+ this_task->duration,this_task->label);
 		count++;
 	}
 	render_options(day);

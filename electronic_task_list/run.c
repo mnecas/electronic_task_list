@@ -5,12 +5,12 @@
 
 Task* get_Task_p(Date date,Task** tasks) {
 	Task* this_task = *tasks;
+	if (selected_id == -1) return NULL;
 	while (this_task && this_task->next) {
 		if (selected_id == this_task->id) return this_task;
 		this_task = this_task->next;
 	}
-	if (this_task && date.day == this_task->date.day&& date.month == this_task->date.month&& date.year == this_task->date.year) return this_task;
-	return NULL;
+	return this_task;
 }
 
 int get_max_id(Task** tasks) {

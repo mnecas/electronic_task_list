@@ -76,6 +76,7 @@ void get_days_in_week(Date *date, int resp[])
 void update_date(Date *date, int change)
 {
     selected = 0;
+    selected_id = -1;
     int _numberOfDays = number_of_days(date->month, date->year);
     int original = date->day;
     date->day += change;

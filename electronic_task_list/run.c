@@ -12,6 +12,7 @@ Task* get_Task_p(Date date,Task** tasks) {
 	if (this_task && date.day == this_task->date.day&& date.month == this_task->date.month&& date.year == this_task->date.year) return this_task;
 	return NULL;
 }
+
 int get_max_id(Task** tasks) {
 	Task* this_task = *tasks;
 	while (this_task && this_task->next) {
@@ -19,10 +20,6 @@ int get_max_id(Task** tasks) {
 	}
 	if (this_task) return this_task->id;
 	else return 0;
-}
-
-void show_info(Date date, Task** tasks) {
-	Task* this_task = get_Task_p(date, tasks);
 }
 
 void on_add(Date date, Task** tasks) {
@@ -45,7 +42,6 @@ void on_copy(Date date, Task** tasks) {
 	Task* this_task = get_Task_p(date, tasks);
 	if (this_task!=NULL){
 		system("cls");
-		printf("%p", this_task);
 		Date new_date;
 		printf("Day\n");
 		scanf_s("%d", &new_date.day);

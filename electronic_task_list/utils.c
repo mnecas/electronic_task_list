@@ -1,6 +1,4 @@
 #include "common.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 const char* months[13] = { "", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 
@@ -162,9 +160,9 @@ void add_task(int id, int time, int duration, int finished, int priority, char* 
 
 void print_task_label(Task task) {
     if (task.finished) printf(GREEN "%s" RESET, task.label);
-    else if (task.priority == normal) printf("%s", task.label);
     else if (task.priority == minimal) printf(YELLOW "%s" RESET, task.label);
     else if (task.priority == maximal) printf(RED "%s" RESET, task.label);
+    else printf("%s", task.label);
 }
 
 void del_task(int id, Task** task)

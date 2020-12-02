@@ -1,7 +1,4 @@
 #include "common.h"
-#include <conio.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 Task* get_Task_p(Task** tasks) {
 	Task* this_task = *tasks;
@@ -38,6 +35,7 @@ void on_add(Date date, Task** tasks) {
 	scanf_s("%s", label, STR_SIZE);
 	add_task(get_max_id(tasks) + 1, time, duration, 0, priority, label, date, tasks);
 }
+
 void on_copy(Date date, Task** tasks) {
 	Task* this_task = get_Task_p(tasks);
 	if (this_task!=NULL){

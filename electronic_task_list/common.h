@@ -7,6 +7,9 @@
 #endif
 */
 #include "structs.c"
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define STR_SIZE 32
 #define RED  "\x1B[31m"
@@ -15,6 +18,26 @@
 #define BLUE  "\x1B[34m"
 #define WHITE_BACK "\x1b[7m"
 #define RESET "\x1b[0m"
+
+typedef struct
+{
+	int year;
+	int month;
+	int day;
+} Date;
+
+typedef struct task
+{
+	Date date;
+	int id;
+	int time;
+	int duration;
+	enum priority priority;
+	char label[32];
+	int finished;
+	struct task* next;
+
+} Task;
 
 enum runType { day, week, month };
 enum priority { normal, minimal, maximal };

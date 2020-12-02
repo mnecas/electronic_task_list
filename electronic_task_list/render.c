@@ -1,6 +1,4 @@
 #include "common.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 int selected = 0;
 int selected_id = 0;
@@ -93,7 +91,7 @@ void render_day(Date* date, Task** tasks, int move_task)
 			}
 			//else if (check duration) printf("\t[-]");
 			else printf("\t[ ]");
-			printf(" (%d:00-%d:00)", this_task->time, this_task->time + this_task->duration);
+			printf(" (%d:00-%d:00) ", this_task->time, this_task->time + this_task->duration);
 			print_task_label(*this_task);
 			printf("\n");
 			count++;
@@ -109,7 +107,7 @@ void render_day(Date* date, Task** tasks, int move_task)
 		}
 		//else if (check duration) printf("\t[-]");
 		else printf("\t[ ]");
-		printf(" (%d:00-%d:00)", this_task->time, this_task->time+ this_task->duration);
+		printf(" (%d:00-%d:00) ", this_task->time, this_task->time+ this_task->duration);
 		print_task_label(*this_task);
 		printf("\n");
 		count++;
@@ -129,13 +127,13 @@ void render_week(Date* date, Task** tasks, int move_task)
 	for (int i = 0; i < 7; i++) {
 		if (daysInWeek[i].day == date->day) printf("\t%s " WHITE_BACK "%d" RESET, week_day_names[i], daysInWeek[i].day);
 		else printf("\t%s %d", week_day_names[i], daysInWeek[i].day);
-
+		printf(" ");
 		Task* this_task = *tasks;
 		while (this_task && this_task->next) {
-			if (this_task->date.day == daysInWeek[i].day && this_task->date.month && daysInWeek[i].month)print_task_label(*this_task);
+			if (this_task->date.day == daysInWeek[i].day && this_task->date.month && daysInWeek[i].month)print_task_label(*this_task); printf(" ");
 			this_task = this_task->next;
 		}
-		if (this_task && this_task->date.day == daysInWeek[i].day && this_task->date.month && daysInWeek[i].month)print_task_label(*this_task);
+		if (this_task && this_task->date.day == daysInWeek[i].day && this_task->date.month && daysInWeek[i].month)print_task_label(*this_task); printf(" ");
 		printf("\n");
 	}
 

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Task* get_Task_p(Date date,Task** tasks) {
+Task* get_Task_p(Task** tasks) {
 	Task* this_task = *tasks;
 	if (selected_id == -1) return NULL;
 	while (this_task && this_task->next) {
@@ -24,7 +24,7 @@ int get_max_id(Task** tasks) {
 
 void on_add(Date date, Task** tasks) {
 
-	Task* this_task = get_Task_p(date, tasks);
+	Task* this_task = get_Task_p(tasks);
 	system("cls");
 	int time, duration, priority;
 	char label[STR_SIZE];
@@ -39,7 +39,7 @@ void on_add(Date date, Task** tasks) {
 	add_task(get_max_id(tasks) + 1, time, duration, 0, priority, label, date, tasks);
 }
 void on_copy(Date date, Task** tasks) {
-	Task* this_task = get_Task_p(date, tasks);
+	Task* this_task = get_Task_p(tasks);
 	if (this_task!=NULL){
 		system("cls");
 		Date new_date;
@@ -55,7 +55,7 @@ void on_copy(Date date, Task** tasks) {
 }
 
 void on_edit(Date date, Task** tasks) {
-	Task* this_task = get_Task_p(date, tasks);
+	Task* this_task = get_Task_p(tasks);
 	if (this_task != NULL) {
 		system("cls");
 		int option = 0;
@@ -134,7 +134,7 @@ void on_edit(Date date, Task** tasks) {
 }
 
 void on_remove(Date date, Task** tasks) {
-	Task* this_task = get_Task_p(date, tasks);
+	Task* this_task = get_Task_p(tasks);
 	if (this_task != NULL) {
 		del_task(this_task->id, tasks);
 	}
@@ -155,20 +155,24 @@ void run(Date* date, Task** tasks, enum runType format) {
 			case 72:
 				// Arrow up
 				if (format == month) update_date(date, -7);
+				else if (format == week) update_date(date, -1);
 				move_task = -1;
 				break;
 			case 75:
 				// Arrow left
-				update_date(date, -1);
+				if (format != week) update_date(date, -1);
+				else move_task = -1;
 				break;
 			case 80:
 				// Arrow down
 				if (format == month) update_date(date, 7);
+				else if (format == week) update_date(date, 1);
 				move_task = 1;
 				break;
 			case 77:
 				// Arrow right
-				update_date(date, 1);
+				if (format != week) update_date(date, 1);
+				else move_task = 1;
 				break;
 			}
 		}

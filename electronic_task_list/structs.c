@@ -11,7 +11,7 @@ typedef struct task
 	int id;
 	int time;
 	int duration;
-	int priority;
+	enum priority priority;
 	char label[32];
 	int finished;
 	struct task* next;

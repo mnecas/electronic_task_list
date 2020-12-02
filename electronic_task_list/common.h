@@ -9,8 +9,15 @@
 #include "structs.c"
 
 #define STR_SIZE 32
+#define RED  "\x1B[31m"
+#define GREEN  "\x1B[32m"
+#define YELLOW  "\x1B[33m"
+#define BLUE  "\x1B[34m"
+#define WHITE_BACK "\x1b[7m"
+#define RESET "\x1b[0m"
 
 enum runType { day, week, month };
+enum priority { normal, minimal, maximal };
 
 void render(Date* date, Task** tasks, enum typeRun format, int move_task);
 void run(Date* date, Task** tasks, enum runType format);
@@ -21,9 +28,10 @@ int year_code(int year);
 int number_of_weekday(int day, int month, int year);
 int is_leap_year(int year);
 int number_of_days(int month, int year);
-void get_days_in_week(Date* date, int* resp);
+void get_days_in_week(Date* date, Date resp[]);
 void update_date(Date* date, int change);
 const char* get_month_name(int month);
+void print_task_label(Task task);
 
 extern int selected;
 extern int selected_id;

@@ -2,20 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define WHITE_BACK "\x1b[7m"
-#define RESET "\x1b[0m"
 int selected = 0;
 int selected_id = 0;
+const char* week_day_names[7] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 
-void render_header(Date* date)
-{
-	printf("\t%d\t\t\t%s\n", date->year, get_month_name(date->month));
-	printf("\tSun\tMon\tTue\tWed\tThu\tFri\tSat\n");
-	printf("\t");
-	for (int i = 0; i < 52; i++)
-		printf("-");
-	printf("\n");
-}
 void render_options(enum runType format)
 {
 
@@ -43,7 +33,12 @@ void render_month(Date* date)
 	system("cls");
 
 	// Redner header
-	render_header(date);
+	printf("\t%d\t\t\t%s\n\t", date->year, get_month_name(date->month));
+	for (int i = 0; i < 7; i++)printf("%s\t", week_day_names[i]);
+	printf("\n\t");
+	for (int i = 0; i < 52; i++)
+		printf("-");
+	printf("\n");
 
 	int _numberDay = number_of_weekday(1, date->month, date->year) - 1;
 	int _numberOfDays = number_of_days(date->month, date->year);
@@ -98,7 +93,9 @@ void render_day(Date* date, Task** tasks, int move_task)
 			}
 			//else if (check duration) printf("\t[-]");
 			else printf("\t[ ]");
-			printf(" (%d:00-%d:00) %s\n", this_task->time, this_task->time + this_task->duration, this_task->label);
+			printf(" (%d:00-%d:00)", this_task->time, this_task->time + this_task->duration);
+			print_task_label(*this_task);
+			printf("\n");
 			count++;
 		}
 		this_task = this_task->next;
@@ -112,23 +109,34 @@ void render_day(Date* date, Task** tasks, int move_task)
 		}
 		//else if (check duration) printf("\t[-]");
 		else printf("\t[ ]");
-		printf(" (%d:00-%d:00) %s\n", this_task->time, this_task->time+ this_task->duration,this_task->label);
+		printf(" (%d:00-%d:00)", this_task->time, this_task->time+ this_task->duration);
+		print_task_label(*this_task);
+		printf("\n");
 		count++;
 	}
 	render_options(day);
 }
+
 void render_week(Date* date, Task** tasks, int move_task)
 {
 	// Clear previous render
 	system("cls");
 
 	// Redner header
-	render_header(date);
-	int daysInWeek[7];
+	printf("\n");
+	Date daysInWeek[7];
 	get_days_in_week(date, daysInWeek);
 	for (int i = 0; i < 7; i++) {
-		if (daysInWeek[i] == date->day) printf(WHITE_BACK "\t%d" RESET, daysInWeek[i]);
-		else printf("\t%d", daysInWeek[i]);
+		if (daysInWeek[i].day == date->day) printf("\t%s " WHITE_BACK "%d" RESET, week_day_names[i], daysInWeek[i].day);
+		else printf("\t%s %d", week_day_names[i], daysInWeek[i].day);
+
+		Task* this_task = *tasks;
+		while (this_task && this_task->next) {
+			if (this_task->date.day == daysInWeek[i].day && this_task->date.month && daysInWeek[i].month)print_task_label(*this_task);
+			this_task = this_task->next;
+		}
+		if (this_task && this_task->date.day == daysInWeek[i].day && this_task->date.month && daysInWeek[i].month)print_task_label(*this_task);
+		printf("\n");
 	}
 
 	render_options(week);

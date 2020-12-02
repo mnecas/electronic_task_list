@@ -51,7 +51,7 @@ int number_of_days(int month, int year)
     if (is_leap_year(year)) days[2] = 29;
     return days[month];
 }
-void get_days_in_week(Date *date, int resp[])
+void get_days_in_week(Date *date, Date resp[])
 {
 
     int _numberDay = number_of_weekday(date->day, date->month, date->year);
@@ -62,17 +62,27 @@ void get_days_in_week(Date *date, int resp[])
     else _numberOfDays2 = number_of_days(12, date->year);
 
     int counter = 0;
+    Date resp_date;
 
     for (int i = 0; i < 7; i++)
     {
+        resp_date.month = date->month;
         int x = date->day - _numberDay + i;
         int y = _numberOfDays + 1;
         int _day = (date->day - _numberDay + i) % (number_of_days(date->month, date->year) + 1);
-        if (x >= y) _day = ++counter;
-        else if (x <= 0) _day = _numberOfDays2 + _day;
-        resp[i] = _day;
+        if (x >= y) {
+            _day = ++counter;
+            resp_date.month = date->month+1;
+        }
+        else if (x <= 0) {
+            _day = _numberOfDays2 + _day;
+            resp_date.month = date->month-1;
+        }
+        resp_date.day=_day;
+        resp[i] = resp_date;
     }
 }
+
 void update_date(Date *date, int change)
 {
     selected = 0;
@@ -150,6 +160,12 @@ void add_task(int id, int time, int duration, int finished, int priority, char* 
     }
 }
 
+void print_task_label(Task task) {
+    if (task.finished) printf(GREEN "%s" RESET, task.label);
+    else if (task.priority == normal) printf("%s", task.label);
+    else if (task.priority == minimal) printf(YELLOW "%s" RESET, task.label);
+    else if (task.priority == maximal) printf(RED "%s" RESET, task.label);
+}
 
 void del_task(int id, Task** task)
 {

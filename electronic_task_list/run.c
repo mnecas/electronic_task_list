@@ -102,12 +102,12 @@ void on_edit(Date date, Task** tasks) {
 					scanf_s("%d", &this_task->date.year);
 					break;
 				case 3:
-					printf("Time (%d)\n", this_task->time);
-					scanf_s("%d", &this_task->time);
+					printf("Time (%d:%d) in format H:M\n", this_task->time.hour, this_task->time.min);
+					scanf_s("%d:%d", &this_task->time.hour, &this_task->time.min);
 					break;
 				case 4:
-					printf("Duration (%d)\n", this_task->duration);
-					scanf_s("%d", &this_task->duration);
+					printf("Duration (%d:%d) in format H:M\n", this_task->duration.hour, this_task->duration.min);
+					scanf_s("%d:%d", &this_task->duration.hour, &this_task->duration.min);
 					break;
 				case 5:
 					printf("Priority (%d) [0-normal, 1-minimal, 2-maximum]\n", this_task->priority);

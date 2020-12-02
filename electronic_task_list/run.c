@@ -23,16 +23,19 @@ void on_add(Date date, Task** tasks) {
 
 	Task* this_task = get_Task_p(tasks);
 	system("cls");
-	int time, duration, priority;
+	int priority;
+	Time time;
+	Time duration;
 	char label[STR_SIZE];
 	printf("Time\n");
-	scanf_s("%d", &time);
+	scanf_s("%d:%d", &time.hour, &time.min);
 	printf("Duration\n");
-	scanf_s("%d", &duration);
+	scanf_s("%d:%d", &duration.hour, &duration.min);
 	printf("Priority\n");
 	scanf_s("%d", &priority);
 	printf("Label\n");
 	scanf_s("%s", label, STR_SIZE);
+
 	add_task(get_max_id(tasks) + 1, time, duration, 0, priority, label, date, tasks);
 }
 

@@ -26,12 +26,17 @@ typedef struct
 	int day;
 } Date;
 
+typedef struct {
+	int hour;
+	int min;
+}Time;
+
 typedef struct task
 {
 	Date date;
 	int id;
-	int time;
-	int duration;
+	Time time;
+	Time duration;
 	enum priority priority;
 	char label[32];
 	int finished;
@@ -44,7 +49,7 @@ enum priority { normal, minimal, maximal };
 
 void render(Date* date, Task** tasks, enum typeRun format, int move_task);
 void run(Date* date, Task** tasks, enum runType format);
-void add_task(int id, int time, int duration, int finished, int priority, char* label, Date date, Task** task);
+void add_task(int id, Time time, Time duration, int finished, int priority, char* label, Date date, Task** task);
 void del_task(int id, Task** task);
 
 int year_code(int year);
@@ -55,6 +60,7 @@ void get_days_in_week(Date* date, Date resp[]);
 void update_date(Date* date, int change);
 const char* get_month_name(int month);
 void print_task_label(Task task);
+Time* eval_time(Time time, Time duration);
 
 extern int selected;
 extern int selected_id;

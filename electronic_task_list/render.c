@@ -91,7 +91,8 @@ void render_day(Date* date, Task** tasks, int move_task)
 			}
 			//else if (check duration) printf("\t[-]");
 			else printf("\t[ ]");
-			printf(" (%d:00-%d:00) ", this_task->time, this_task->time + this_task->duration);
+			Time* duration = eval_time(this_task->time, this_task->duration);
+			printf(" (%d:%d-%d:%d) ", this_task->time.hour, this_task->time.min, duration->hour, duration->min);
 			print_task_label(*this_task);
 			printf("\n");
 			count++;
@@ -107,7 +108,8 @@ void render_day(Date* date, Task** tasks, int move_task)
 		}
 		//else if (check duration) printf("\t[-]");
 		else printf("\t[ ]");
-		printf(" (%d:00-%d:00) ", this_task->time, this_task->time+ this_task->duration);
+		Time* duration = eval_time(this_task->time, this_task->duration);
+		printf(" (%d:%d-%d:%d) ", this_task->time.hour, this_task->time.min, duration->hour, duration->min);
 		print_task_label(*this_task);
 		printf("\n");
 		count++;

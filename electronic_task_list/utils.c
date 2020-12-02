@@ -116,7 +116,7 @@ void update_date(Date *date, int change)
     }
 }
 
-void add_task(int id, int time, int duration, int finished, int priority, char* label, Date date, Task** task)
+void add_task(int id, Time time, Time duration, int finished, int priority, char* label, Date date, Task** task)
 {
     Task* new_task = (Task*)malloc(sizeof(Task));
     Task* this_task;
@@ -156,6 +156,16 @@ void add_task(int id, int time, int duration, int finished, int priority, char* 
         }
         this_task = this_task->next;
     }
+}
+Time* eval_time(Time time, Time duration) {
+    Time* resp = (Time*)malloc(sizeof(time));
+    resp->min = duration.min + time.min;
+    resp->hour = duration.hour + time.hour;
+    if (resp->min >= 60) {
+        resp->hour += resp->min / 60;
+        resp->min %= 60;
+    }
+    return resp;
 }
 
 void print_task_label(Task task) {

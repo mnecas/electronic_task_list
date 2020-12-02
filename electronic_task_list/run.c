@@ -107,11 +107,11 @@ void on_edit(Date date, Task** tasks) {
 					scanf_s("%d", &this_task->duration);
 					break;
 				case 5:
-					printf("Priority (%d)\n", this_task->priority);
+					printf("Priority (%d) [0-normal, 1-minimal, 2-maximum]\n", this_task->priority);
 					scanf_s("%d", &this_task->priority);
 					break;
 				case 6:
-					printf("Finished (%d)\n", this_task->finished);
+					printf("Finished (%d) [0-no, 1-yes]\n", this_task->finished);
 					scanf_s("%d", &this_task->finished);
 					break;
 				case 7:

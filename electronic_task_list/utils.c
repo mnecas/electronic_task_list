@@ -1,7 +1,5 @@
 #include "common.h"
 
-const char* months[13] = { "", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-
 int year_code(int year)
 {
     return year % 100 + ((year % 100) % 4);
@@ -33,6 +31,7 @@ int is_leap_year(int year)
 }
 const char* get_month_name(int month)
 {
+    static char* months[13] = { "", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
     return months[month];
 }
 int number_of_days(int month, int year)
@@ -102,7 +101,7 @@ void update_date(Date *date, int change)
         date->day += number_of_days(date->month, date->year);
     }
     else if (date->day > _numberOfDays)
-    {
+    { 
         date->month += 1;
         if (date->month == 13)
         {

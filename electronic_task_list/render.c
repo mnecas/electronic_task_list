@@ -40,8 +40,8 @@ void render_month(Date* date)
 
 	int _numberDay = number_of_weekday(1, date->month, date->year) - 1;
 	int _numberOfDays = number_of_days(date->month, date->year);
-	// Padding
 
+	// Padding
 	for (int i = 0; i < (_numberDay + 7) % 7; i++) printf("\t");
 
 	for (int i = 1; i < _numberOfDays + 1; i++)
@@ -83,7 +83,7 @@ void render_day(Date* date, Task** tasks, int move_task)
 	else if (selected > size) selected = 0;
 
 	int count = 0;
-	while (this_task && this_task->next) {
+	while (this_task) {
 		if (this_task->date.day == date->day && this_task->date.month == date->month && this_task->date.year == date->year) {
 			if (count == selected) {
 				printf("\t[x]");
@@ -99,21 +99,6 @@ void render_day(Date* date, Task** tasks, int move_task)
 		}
 		this_task = this_task->next;
 	}
-	// TODO move this to function
-	// TODO add color by the priority
-	if (this_task && this_task->date.day == date->day && this_task->date.month == date->month && this_task->date.year == date->year) {
-		if (count == selected) {
-			printf("\t[x]");
-			selected_id = this_task->id;
-		}
-		//else if (check duration) printf("\t[-]");
-		else printf("\t[ ]");
-		Time* duration = eval_time(this_task->time, this_task->duration);
-		printf(" (%d:%d-%d:%d) ", this_task->time.hour, this_task->time.min, duration->hour, duration->min);
-		print_task_label(*this_task);
-		printf("\n");
-		count++;
-	}
 	render_options(day);
 }
 
@@ -124,18 +109,20 @@ void render_week(Date* date, Task** tasks, int move_task)
 
 	// Redner header
 	printf("\n");
-	Date daysInWeek[7];
-	get_days_in_week(date, daysInWeek);
+	Date days_in_week[7];
+	get_days_in_week(date, days_in_week);
 	for (int i = 0; i < 7; i++) {
-		if (daysInWeek[i].day == date->day) printf("\t%s " WHITE_BACK "%d" RESET, week_day_names[i], daysInWeek[i].day);
-		else printf("\t%s %d", week_day_names[i], daysInWeek[i].day);
+		if (days_in_week[i].day == date->day) printf("\t%s " WHITE_BACK "%d" RESET, week_day_names[i], days_in_week[i].day);
+		else printf("\t%s %d", week_day_names[i], days_in_week[i].day);
 		printf(" ");
 		Task* this_task = *tasks;
-		while (this_task && this_task->next) {
-			if (this_task->date.day == daysInWeek[i].day && this_task->date.month && daysInWeek[i].month)print_task_label(*this_task); printf(" ");
+		while (this_task) {
+			if (this_task->date.day == days_in_week[i].day && this_task->date.month == days_in_week[i].month) { 
+				print_task_label(*this_task);
+				printf(" "); 
+			}
 			this_task = this_task->next;
 		}
-		if (this_task && this_task->date.day == daysInWeek[i].day && this_task->date.month && daysInWeek[i].month)print_task_label(*this_task); printf(" ");
 		printf("\n");
 	}
 

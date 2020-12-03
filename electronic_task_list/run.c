@@ -1,6 +1,6 @@
 #include "common.h"
 
-Task* get_Task_p(Task** tasks) {
+Task* get_selected_task(Task** tasks) {
 	Task* this_task = *tasks;
 	if (selected_id == -1) return NULL;
 	while (this_task && this_task->next) {
@@ -12,16 +12,16 @@ Task* get_Task_p(Task** tasks) {
 
 int get_max_id(Task** tasks) {
 	Task* this_task = *tasks;
-	while (this_task && this_task->next) {
+	while (this_task) {
 		this_task = this_task->next;
 	}
 	if (this_task) return this_task->id;
-	else return 0;
+	return 0;
 }
 
 void on_add(Date date, Task** tasks) {
 
-	Task* this_task = get_Task_p(tasks);
+	Task* this_task = get_selected_task(tasks);
 	system("cls");
 	int priority;
 	Time time;
@@ -40,7 +40,7 @@ void on_add(Date date, Task** tasks) {
 }
 
 void on_copy(Date date, Task** tasks) {
-	Task* this_task = get_Task_p(tasks);
+	Task* this_task = get_selected_task(tasks);
 	if (this_task!=NULL){
 		system("cls");
 		Date new_date;
@@ -56,7 +56,7 @@ void on_copy(Date date, Task** tasks) {
 }
 
 void on_edit(Date date, Task** tasks) {
-	Task* this_task = get_Task_p(tasks);
+	Task* this_task = get_selected_task(tasks);
 	if (this_task != NULL) {
 		system("cls");
 		int option = 0;
@@ -135,7 +135,7 @@ void on_edit(Date date, Task** tasks) {
 }
 
 void on_remove(Date date, Task** tasks) {
-	Task* this_task = get_Task_p(tasks);
+	Task* this_task = get_selected_task(tasks);
 	if (this_task != NULL) {
 		del_task(this_task->id, tasks);
 	}

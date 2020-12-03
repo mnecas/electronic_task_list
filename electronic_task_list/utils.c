@@ -1,39 +1,19 @@
 #include "common.h"
 
-int year_code(int year)
-{
-    return year % 100 + ((year % 100) % 4);
-}
-int is_leap_year(int year)
-{
-    // Return: if year is leap year
-    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-}
-int number_of_days(int month, int year)
-{
-	/*
-		Input:
-			int month 1-12;
-			int year;
-		Return:
-			days in month
-
-	*/
-	int days[13] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-	if (is_leap_year(year)) days[2] = 29;
-	return days[month];
-}
-
 const char* get_month_name(int month)
 {
+	// Retrun month name depending on the month
 	static char* months[12] = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 	return months[month];
 }
 
 void update_date(Date* date, int change)
 {
+	// Restart selected task
 	selected = 0;
 	selected_id = -1;
+	
+	// Add change (-7,-1,1,7) to the date
 	date->tm_mday += change;
 	mktime(date);
 }
@@ -42,7 +22,12 @@ void add_task(int id, Time duration, int finished, int priority, char* label, Da
 {
 	Task* new_task = (Task*)malloc(sizeof(Task));
 	Task* this_task;
+	if (!new_task) {
+		// Could not allocate memory
+		return;
+	}
 
+	// Add all variables
 	strcpy_s(new_task->label, STR_SIZE, label);
 	new_task->duration = duration;
 	new_task->finished = finished;
@@ -51,6 +36,7 @@ void add_task(int id, Time duration, int finished, int priority, char* label, Da
 	new_task->id = id;
 	new_task->next = NULL;
 
+	// Store the Task by Date in linked list from mallest to biggest
 	if (*task == NULL)
 	{
 		*task = new_task;
@@ -78,18 +64,9 @@ void add_task(int id, Time duration, int finished, int priority, char* label, Da
 		this_task = this_task->next;
 	}
 }
-Time* eval_time(Time time, Time duration) {
-	Time* resp = (Time*)malloc(sizeof(time));
-	resp->min = duration.min + time.min;
-	resp->hour = duration.hour + time.hour;
-	if (resp->min >= 60) {
-		resp->hour += resp->min / 60;
-		resp->min %= 60;
-	}
-	return resp;
-}
 
 void print_task_label(Task task) {
+	// Print Task label depending on the status of the Task (finished/prioprity)
 	if (task.finished) printf(GREEN "%s" RESET, task.label);
 	else if (task.priority == minimal) printf(YELLOW "%s" RESET, task.label);
 	else if (task.priority == maximal) printf(RED "%s" RESET, task.label);
@@ -101,6 +78,7 @@ void del_task(int id, Task** task)
 
 	Task* new_task;
 
+	// Delete taks with specific ID
 	while (*task && (*task)->id == id)
 	{
 		Task* new_first = (*task)->next;

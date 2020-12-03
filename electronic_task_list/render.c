@@ -39,8 +39,6 @@ void render_month(Date* date)
 		printf("-");
 	printf("\n");
 
-	int _numberOfDays = number_of_days(date->tm_mon, date->tm_year);
-	
 	// Copy date to tmp for render of the month
 	Date tmp = *date;
 	tmp.tm_mday = 1;
@@ -54,6 +52,7 @@ void render_month(Date* date)
 		// Selected date
 		if (date->tm_mday == tmp.tm_mday) printf(WHITE_BACK "\t%d" RESET, tmp.tm_mday);
 		else printf("\t%d", tmp.tm_mday);
+
 		// New line for end of week
 		if (tmp.tm_wday == 6) printf("\n");
 		tmp.tm_mday++;
@@ -84,10 +83,10 @@ void render_day(Date* date, Task** tasks, int move_task)
 	printf("\n");
 
 	Task* this_task = *tasks;
+
+	// Select Task from list
 	int size = get_size(date, tasks);
-
 	selected += move_task;
-
 	if (selected < 0) selected = size;
 	else if (selected > size) selected = 0;
 
@@ -103,7 +102,7 @@ void render_day(Date* date, Task** tasks, int move_task)
 			else printf("\t[ ]");
 
 			// Get ending time from duration
-			Date end_time = *date;
+			Date end_time = this_task->date;
 			end_time.tm_min += this_task->duration.min;
 			end_time.tm_hour += this_task->duration.hour;
 			mktime(&end_time);

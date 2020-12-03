@@ -48,12 +48,9 @@ void run(Date* date, Task** tasks, enum runType format);
 void add_task(int id, Time duration, int finished, int priority, char* label, Date date, Task** task);
 void del_task(int id, Task** task);
 
-int is_leap_year(int year);
-void get_days_in_week(Date date, Date resp[]);
 void update_date(Date* date, int change);
 const char* get_month_name(int month);
 void print_task_label(Task task);
-Time* eval_time(Time time, Time duration);
 
 extern int selected;
 extern int selected_id;

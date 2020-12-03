@@ -2,7 +2,7 @@
 
 int selected = 0;
 int selected_id = 0;
-const char* week_day_names[7] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+const char* week_day_names[7] = { "Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 
 void render_options(enum runType format)
 {
@@ -25,31 +25,40 @@ void render_options(enum runType format)
 	}
 	printf("\n");
 }
+
 void render_month(Date* date)
 {
 	// Clear previous render
 	system("cls");
 
 	// Redner header
-	printf("\t%d\t\t\t%s\n\t", date->year, get_month_name(date->month));
+	printf("\t%d\t\t\t%s\n\t", date->tm_year+1900, get_month_name(date->tm_mon));
 	for (int i = 0; i < 7; i++)printf("%s\t", week_day_names[i]);
 	printf("\n\t");
 	for (int i = 0; i < 52; i++)
 		printf("-");
 	printf("\n");
 
-	int _numberDay = number_of_weekday(1, date->month, date->year) - 1;
-	int _numberOfDays = number_of_days(date->month, date->year);
+	int _numberOfDays = number_of_days(date->tm_mon, date->tm_year);
+	
+	// Copy date to tmp for render of the month
+	Date tmp = *date;
+	tmp.tm_mday = 1;
+	mktime(&tmp);
 
-	// Padding
-	for (int i = 0; i < (_numberDay + 7) % 7; i++) printf("\t");
+	// Padding for first week
+	for (int i = 0; i < tmp.tm_wday; i++) printf("\t");
 
-	for (int i = 1; i < _numberOfDays + 1; i++)
-	{
-		if (date->day == i) printf(WHITE_BACK "\t%d" RESET, i);
-		else printf("\t%d", i);
-		if ((_numberDay + i) % 7 == 0) printf("\n");
-	}
+	// Render month days
+	do{
+		// Selected date
+		if (date->tm_mday == tmp.tm_mday) printf(WHITE_BACK "\t%d" RESET, tmp.tm_mday);
+		else printf("\t%d", tmp.tm_mday);
+		// New line for end of week
+		if (tmp.tm_wday == 6) printf("\n");
+		tmp.tm_mday++;
+		mktime(&tmp);
+	} while (tmp.tm_mday != 1);
 	render_options(month);
 }
 
@@ -58,7 +67,7 @@ int get_size(Date* date, Task** tasks) {
 
 	int resp = 0;
 	while (this_task && this_task->next) {
-		if (this_task->date.day == date->day && this_task->date.month == date->month && this_task->date.year == date->year) {
+		if (this_task->date.tm_mday == date->tm_mday && this_task->date.tm_mon == date->tm_mon && this_task->date.tm_year == date->tm_year) {
 			resp++;
 		}
 		this_task = this_task->next;
@@ -71,7 +80,7 @@ void render_day(Date* date, Task** tasks, int move_task)
 {
 	system("cls");
 
-	printf("\t%d. %s %d\n", date->day, get_month_name(date->month), date->year);
+	printf("\t%d. %s %d\n", date->tm_mday, get_month_name(date->tm_mon), date->tm_year+1900);
 	printf("\n");
 
 	Task* this_task = *tasks;
@@ -82,9 +91,10 @@ void render_day(Date* date, Task** tasks, int move_task)
 	if (selected < 0) selected = size;
 	else if (selected > size) selected = 0;
 
+	// Render tasks for that day
 	int count = 0;
 	while (this_task) {
-		if (this_task->date.day == date->day && this_task->date.month == date->month && this_task->date.year == date->year) {
+		if (this_task->date.tm_mday == date->tm_mday && this_task->date.tm_mon == date->tm_mon && this_task->date.tm_year == date->tm_year) {
 			if (count == selected) {
 				printf("\t[x]");
 				selected_id = this_task->id;
@@ -107,25 +117,37 @@ void render_week(Date* date, Task** tasks, int move_task)
 	// Clear previous render
 	system("cls");
 
-	// Redner header
-	printf("\n");
-	Date days_in_week[7];
-	get_days_in_week(date, days_in_week);
+
+	// Copy date to tmp for render of the month
+	Date tmp = *date;
+	mktime(&tmp);
+
+	// Go to Sunday
+	while (tmp.tm_wday != 0) {
+		tmp.tm_mday--;
+		mktime(&tmp);
+	}
+
+	// List all days from Sunday to Saturday
 	for (int i = 0; i < 7; i++) {
-		if (days_in_week[i].day == date->day) printf("\t%s " WHITE_BACK "%d" RESET, week_day_names[i], days_in_week[i].day);
-		else printf("\t%s %d", week_day_names[i], days_in_week[i].day);
+		if (tmp.tm_mday == date->tm_mday) printf("\t%s " WHITE_BACK "%d" RESET, week_day_names[i], tmp.tm_mday);
+		else printf("\t%s %d", week_day_names[i], tmp.tm_mday);
 		printf(" ");
+
+		// Render tasks for that day
 		Task* this_task = *tasks;
 		while (this_task) {
-			if (this_task->date.day == days_in_week[i].day && this_task->date.month == days_in_week[i].month) { 
+			if (this_task->date.tm_mday == tmp.tm_mday && this_task->date.tm_mon == tmp.tm_mon) {
 				print_task_label(*this_task);
-				printf(" "); 
+				printf(" ");
 			}
 			this_task = this_task->next;
 		}
 		printf("\n");
+		// Go to next day
+		tmp.tm_mday++;
+		mktime(&tmp);
 	}
-
 	render_options(week);
 }
 

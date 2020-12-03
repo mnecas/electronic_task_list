@@ -10,6 +10,7 @@ Task* get_selected_task(Task** tasks) {
 	return this_task;
 }
 
+
 int get_max_id(Task** tasks) {
 	Task* this_task = *tasks;
 	while (this_task) {
@@ -20,18 +21,16 @@ int get_max_id(Task** tasks) {
 }
 
 void on_add(Date date, Task** tasks) {
-
-	Task* this_task = get_selected_task(tasks);
 	system("cls");
 	int priority;
 	Time time;
 	Time duration;
 	char label[STR_SIZE];
-	printf("Time\n");
+	printf("Time in format hh:mm\n");
 	scanf_s("%d:%d", &time.hour, &time.min);
-	printf("Duration\n");
+	printf("Duration in format hh:mm\n");
 	scanf_s("%d:%d", &duration.hour, &duration.min);
-	printf("Priority\n");
+	printf("Priority [0-normal, 1-minimal, 2-maximum]\n");
 	scanf_s("%d", &priority);
 	printf("Label\n");
 	scanf_s("%s", label, STR_SIZE);
@@ -41,18 +40,17 @@ void on_add(Date date, Task** tasks) {
 
 void on_copy(Date date, Task** tasks) {
 	Task* this_task = get_selected_task(tasks);
-	if (this_task!=NULL){
+	if (this_task != NULL) {
 		system("cls");
 		Date new_date;
 		printf("Day\n");
-		scanf_s("%d", &new_date.day);
+		scanf_s("%d", &new_date.tm_mday);
 		printf("Month\n");
-		scanf_s("%d", &new_date.month);
+		scanf_s("%d", &new_date.tm_mon);
 		printf("Year\n");
-		scanf_s("%d", &new_date.year);
+		scanf_s("%d", &new_date.tm_year);
 		add_task(get_max_id(tasks) + 1, this_task->time, this_task->duration, this_task->finished, this_task->priority, this_task->label, new_date, tasks);
 	}
-	
 }
 
 void on_edit(Date date, Task** tasks) {
@@ -90,23 +88,23 @@ void on_edit(Date date, Task** tasks) {
 			else {
 				switch (option) {
 				case 0:
-					printf("Day (%d)\n", this_task->date.day);
-					scanf_s("%d", &this_task->date.day);
+					printf("Day (%d)\n", this_task->date.tm_mday);
+					scanf_s("%d", &this_task->date.tm_mday);
 					break;
 				case 1:
-					printf("Month (%d)\n", this_task->date.month);
-					scanf_s("%d", &this_task->date.month);
+					printf("Month (%d)\n", this_task->date.tm_mon);
+					scanf_s("%d", &this_task->date.tm_mon);
 					break;
 				case 2:
-					printf("Year (%d)\n", this_task->date.year);
-					scanf_s("%d", &this_task->date.year);
+					printf("Year (%d)\n", this_task->date.tm_year);
+					scanf_s("%d", &this_task->date.tm_year);
 					break;
 				case 3:
-					printf("Time (%d:%d) in format H:M\n", this_task->time.hour, this_task->time.min);
+					printf("Time (%d:%d) in format hh:mm\n", this_task->time.hour, this_task->time.min);
 					scanf_s("%d:%d", &this_task->time.hour, &this_task->time.min);
 					break;
 				case 4:
-					printf("Duration (%d:%d) in format H:M\n", this_task->duration.hour, this_task->duration.min);
+					printf("Duration (%d:%d) in format hh:mm\n", this_task->duration.hour, this_task->duration.min);
 					scanf_s("%d:%d", &this_task->duration.hour, &this_task->duration.min);
 					break;
 				case 5:
@@ -122,6 +120,7 @@ void on_edit(Date date, Task** tasks) {
 					scanf_s("%s", this_task->label, STR_SIZE);
 					break;
 				}
+				mktime(&this_task->date);
 				system("cls");
 				return;
 			}

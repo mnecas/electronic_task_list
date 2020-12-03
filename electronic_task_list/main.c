@@ -12,17 +12,13 @@ int main()
 
 	//int time, int duration, int finished, int priority, char *label, Date date, Task **task
 
-	Time time;
-	time.hour = 12;
-	time.min = 23;
-
 	Time duration;
 	duration.hour = 1;
 	duration.min = 20;
-	add_task(0, time, duration, 0, normal, "test1", date, &task);
-	add_task(1, time, duration, 0, minimal, "test2", date, &task);
-	add_task(2, time, duration, 0, minimal, "test3", date, &task);
-	add_task(3, time, duration, 0, maximal, "test4", date, &task);
+	add_task(0, duration, 0, normal, "test1", date, &task);
+	add_task(1, duration, 0, minimal, "test2", date, &task);
+	add_task(2, duration, 0, minimal, "test3", date, &task);
+	add_task(3, duration, 0, maximal, "test4", date, &task);
 
 
 	int ret;

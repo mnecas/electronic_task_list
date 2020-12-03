@@ -38,13 +38,12 @@ void update_date(Date* date, int change)
 	mktime(date);
 }
 
-void add_task(int id, Time time, Time duration, int finished, int priority, char* label, Date date, Task** task)
+void add_task(int id, Time duration, int finished, int priority, char* label, Date date, Task** task)
 {
 	Task* new_task = (Task*)malloc(sizeof(Task));
 	Task* this_task;
 
 	strcpy_s(new_task->label, STR_SIZE, label);
-	new_task->time = time;
 	new_task->duration = duration;
 	new_task->finished = finished;
 	new_task->priority = priority;
@@ -57,7 +56,7 @@ void add_task(int id, Time time, Time duration, int finished, int priority, char
 		*task = new_task;
 		return;
 	}
-	else if (new_task->id < (*task)->id)
+	else if (difftime(mktime(&new_task->date), mktime(&(*task)->date))< 0)
 	{
 		new_task->next = *task;
 		*task = new_task;
@@ -70,7 +69,7 @@ void add_task(int id, Time time, Time duration, int finished, int priority, char
 			this_task->next = new_task;
 			return;
 		}
-		else if (new_task->id < this_task->id)
+		else if (difftime(mktime(&new_task->date), mktime(&(*task)->date)) < 0)
 		{
 			new_task->next = this_task->next;
 			this_task->next = new_task;

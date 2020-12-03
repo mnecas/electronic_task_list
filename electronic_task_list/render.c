@@ -101,8 +101,15 @@ void render_day(Date* date, Task** tasks, int move_task)
 			}
 			//else if (check duration) printf("\t[-]");
 			else printf("\t[ ]");
-			Time* duration = eval_time(this_task->time, this_task->duration);
-			printf(" (%d:%d-%d:%d) ", this_task->time.hour, this_task->time.min, duration->hour, duration->min);
+
+			// Get ending time from duration
+			Date end_time = *date;
+			end_time.tm_min += this_task->duration.min;
+			end_time.tm_hour += this_task->duration.hour;
+			mktime(&end_time);
+			
+			// Render Task
+			printf(" (%02d:%02d-%02d:%02d) ", this_task->date.tm_hour, this_task->date.tm_min, end_time.tm_hour, end_time.tm_min);
 			print_task_label(*this_task);
 			printf("\n");
 			count++;

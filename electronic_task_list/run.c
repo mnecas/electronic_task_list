@@ -23,11 +23,10 @@ int get_max_id(Task** tasks) {
 void on_add(Date date, Task** tasks) {
 	system("cls");
 	int priority;
-	Time time;
 	Time duration;
 	char label[STR_SIZE];
 	printf("Time in format hh:mm\n");
-	scanf_s("%d:%d", &time.hour, &time.min);
+	scanf_s("%d:%d", &date.tm_hour, &date.tm_min);
 	printf("Duration in format hh:mm\n");
 	scanf_s("%d:%d", &duration.hour, &duration.min);
 	printf("Priority [0-normal, 1-minimal, 2-maximum]\n");
@@ -35,7 +34,7 @@ void on_add(Date date, Task** tasks) {
 	printf("Label\n");
 	scanf_s("%s", label, STR_SIZE);
 
-	add_task(get_max_id(tasks) + 1, time, duration, 0, priority, label, date, tasks);
+	add_task(get_max_id(tasks) + 1, duration, 0, priority, label, date, tasks);
 }
 
 void on_copy(Date date, Task** tasks) {
@@ -49,7 +48,7 @@ void on_copy(Date date, Task** tasks) {
 		scanf_s("%d", &new_date.tm_mon);
 		printf("Year\n");
 		scanf_s("%d", &new_date.tm_year);
-		add_task(get_max_id(tasks) + 1, this_task->time, this_task->duration, this_task->finished, this_task->priority, this_task->label, new_date, tasks);
+		add_task(get_max_id(tasks) + 1, this_task->duration, this_task->finished, this_task->priority, this_task->label, new_date, tasks);
 	}
 }
 
@@ -100,11 +99,11 @@ void on_edit(Date date, Task** tasks) {
 					scanf_s("%d", &this_task->date.tm_year);
 					break;
 				case 3:
-					printf("Time (%d:%d) in format hh:mm\n", this_task->time.hour, this_task->time.min);
-					scanf_s("%d:%d", &this_task->time.hour, &this_task->time.min);
+					printf("Time (%02d:%02d) in format hh:mm\n", this_task->date.tm_hour, this_task->date.tm_min);
+					scanf_s("%d:%d", &this_task->date.tm_hour, &this_task->date.tm_min);
 					break;
 				case 4:
-					printf("Duration (%d:%d) in format hh:mm\n", this_task->duration.hour, this_task->duration.min);
+					printf("Duration (%02d:%02d) in format hh:mm\n", this_task->duration.hour, this_task->duration.min);
 					scanf_s("%d:%d", &this_task->duration.hour, &this_task->duration.min);
 					break;
 				case 5:

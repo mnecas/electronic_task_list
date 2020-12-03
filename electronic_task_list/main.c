@@ -18,25 +18,6 @@ int main()
 	add_task(2, duration, 0, minimal, "test3", date, &task);
 	add_task(3, duration, 0, maximal, "test4", date, &task);
 
-
-	int ret;
-	Date info;
-	char buffer[80];
-
-	info.tm_year = 2020 - 1900;
-	info.tm_mon = 12 - 1;
-	info.tm_mday = 6;
-	info.tm_hour = 10;
-	info.tm_min = 0;
-	info.tm_sec = 1;
-	info.tm_isdst = -1;
-	ret = mktime(&info);
-	printf("FIRST %d\n", info.tm_wday);
-	info.tm_mday+=1;
-	ret = mktime(&info);
-	printf("SEC %d\n", info.tm_mday);
-
-
 	run(&date, &task, day);
 
 	return 0;

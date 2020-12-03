@@ -26,7 +26,7 @@ void render_options(enum runType format)
 	printf("\n");
 }
 
-void render_month(Date* date)
+void render_month(Date* date, Task** tasks)
 {
 	// Clear previous render
 	system("cls");
@@ -51,6 +51,7 @@ void render_month(Date* date)
 	do{
 		// Selected date
 		if (date->tm_mday == tmp.tm_mday) printf(WHITE_BACK "\t%d" RESET, tmp.tm_mday);
+		else if (date_has_tasks(tmp, tasks)) printf(YELLOW "\t%d" RESET, tmp.tm_mday);
 		else printf("\t%d", tmp.tm_mday);
 
 		// New line for end of week
@@ -62,6 +63,7 @@ void render_month(Date* date)
 }
 
 int get_size(Date* date, Task** tasks) {
+	// Returns size of the linked list
 	Task* this_task = *tasks;
 
 	int resp = 0;
@@ -160,5 +162,5 @@ void render_week(Date* date, Task** tasks, int move_task)
 void render(Date* date, Task** tasks, enum typeRun format, int move_task) {
 	if (format == day) render_day(date, tasks, move_task);
 	else if (format == week) render_week(date, tasks, move_task);
-	else if (format == month) render_month(date);
+	else if (format == month) render_month(date, tasks);
 }

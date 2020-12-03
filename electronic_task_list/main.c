@@ -10,8 +10,6 @@ int main()
 
 	Task* task = NULL;
 
-	//int time, int duration, int finished, int priority, char *label, Date date, Task **task
-
 	Time duration;
 	duration.hour = 1;
 	duration.min = 20;

@@ -98,3 +98,16 @@ void del_task(int id, Task** task)
 		new_task = new_task->next;
 	}
 }
+
+int date_has_tasks(Date date, Task** tasks) {
+	Task* new_task = *tasks;
+	while (new_task)
+	{
+		if (date.tm_mday == new_task->date.tm_mday && date.tm_year == new_task->date.tm_year && date.tm_mon == new_task->date.tm_mon)
+		{
+			return 1;
+		}
+		new_task = new_task->next;
+	}
+	return 0;
+}

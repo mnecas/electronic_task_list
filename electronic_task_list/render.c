@@ -76,6 +76,14 @@ int get_size(Date* date, Task** tasks) {
 	return resp;
 
 }
+Date get_end_time(Date start, Time duration) {
+	// Get ending time from duration
+	Date end_time = start;
+	end_time.tm_min += duration.min;
+	end_time.tm_hour += duration.hour;
+	mktime(&end_time);
+	return end_time;
+}
 
 void render_day(Date* date, Task** tasks, int move_task)
 {
@@ -96,18 +104,13 @@ void render_day(Date* date, Task** tasks, int move_task)
 	int count = 0;
 	while (this_task) {
 		if (this_task->date.tm_mday == date->tm_mday && this_task->date.tm_mon == date->tm_mon && this_task->date.tm_year == date->tm_year) {
+			Date end_time = get_end_time(this_task->date, this_task->duration);
+
 			if (count == selected) {
 				printf("\t[x]");
 				selected_id = this_task->id;
 			}
-			//else if (check duration) printf("\t[-]");
 			else printf("\t[ ]");
-
-			// Get ending time from duration
-			Date end_time = this_task->date;
-			end_time.tm_min += this_task->duration.min;
-			end_time.tm_hour += this_task->duration.hour;
-			mktime(&end_time);
 			
 			// Render Task
 			printf(" (%02d:%02d-%02d:%02d) ", this_task->date.tm_hour, this_task->date.tm_min, end_time.tm_hour, end_time.tm_min);

@@ -10,6 +10,7 @@
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define STR_SIZE 32
 #define RED  "\x1B[31m"
@@ -19,12 +20,8 @@
 #define WHITE_BACK "\x1b[7m"
 #define RESET "\x1b[0m"
 
-typedef struct
-{
-	int year;
-	int month;
-	int day;
-} Date;
+
+typedef struct tm Date;
 
 typedef struct {
 	int hour;
@@ -35,7 +32,6 @@ typedef struct task
 {
 	Date date;
 	int id;
-	Time time;
 	Time duration;
 	enum priority priority;
 	char label[32];
@@ -49,18 +45,12 @@ enum priority { normal, minimal, maximal };
 
 void render(Date* date, Task** tasks, enum typeRun format, int move_task);
 void run(Date* date, Task** tasks, enum runType format);
-void add_task(int id, Time time, Time duration, int finished, int priority, char* label, Date date, Task** task);
+void add_task(int id, Time duration, int finished, int priority, char* label, Date date, Task** task);
 void del_task(int id, Task** task);
 
-int year_code(int year);
-int number_of_weekday(int day, int month, int year);
-int is_leap_year(int year);
-int number_of_days(int month, int year);
-void get_days_in_week(Date* date, Date resp[]);
 void update_date(Date* date, int change);
 const char* get_month_name(int month);
 void print_task_label(Task task);
-Time* eval_time(Time time, Time duration);
 
 extern int selected;
 extern int selected_id;

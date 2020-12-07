@@ -67,7 +67,7 @@ int get_size(Date* date, Task** tasks) {
 	Task* this_task = *tasks;
 
 	int resp = 0;
-	while (this_task && this_task->next) {
+	while (this_task) {
 		if (this_task->date.tm_mday == date->tm_mday && this_task->date.tm_mon == date->tm_mon && this_task->date.tm_year == date->tm_year) {
 			resp++;
 		}
@@ -97,8 +97,8 @@ void render_day(Date* date, Task** tasks, int move_task)
 	// Select Task from list
 	int size = get_size(date, tasks);
 	selected += move_task;
-	if (selected < 0) selected = size;
-	else if (selected > size) selected = 0;
+	if (selected < 0) selected = size-1;
+	else if (selected >= size) selected = 0;
 
 	// Render tasks for that day
 	int count = 0;

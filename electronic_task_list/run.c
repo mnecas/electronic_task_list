@@ -13,11 +13,12 @@ Task* get_selected_task(Task** tasks) {
 
 int get_max_id(Task** tasks) {
 	Task* this_task = *tasks;
+	int resp = 0;
 	while (this_task) {
+		if (this_task->id > resp) resp = this_task->id;
 		this_task = this_task->next;
 	}
-	if (this_task) return this_task->id;
-	return 0;
+	return resp;
 }
 
 void on_add(Date date, Task** tasks) {
@@ -41,13 +42,16 @@ void on_copy(Date date, Task** tasks) {
 	Task* this_task = get_selected_task(tasks);
 	if (this_task != NULL) {
 		system("cls");
-		Date new_date;
+		Date new_date = date;
 		printf("Day\n");
 		scanf_s("%d", &new_date.tm_mday);
 		printf("Month\n");
 		scanf_s("%d", &new_date.tm_mon);
 		printf("Year\n");
 		scanf_s("%d", &new_date.tm_year);
+		new_date.tm_mon--;
+		new_date.tm_year -= 1900;
+
 		add_task(get_max_id(tasks) + 1, this_task->duration, this_task->finished, this_task->priority, this_task->label, new_date, tasks);
 	}
 }
@@ -91,12 +95,14 @@ void on_edit(Date date, Task** tasks) {
 					scanf_s("%d", &this_task->date.tm_mday);
 					break;
 				case 1:
-					printf("Month (%d)\n", this_task->date.tm_mon);
+					printf("Month (%d)\n", this_task->date.tm_mon+1);
 					scanf_s("%d", &this_task->date.tm_mon);
+					this_task->date.tm_mon--;
 					break;
 				case 2:
-					printf("Year (%d)\n", this_task->date.tm_year);
+					printf("Year (%d)\n", this_task->date.tm_year+1900);
 					scanf_s("%d", &this_task->date.tm_year);
+					this_task->date.tm_year -= 1900;
 					break;
 				case 3:
 					printf("Time (%02d:%02d) in format hh:mm\n", this_task->date.tm_hour, this_task->date.tm_min);
@@ -160,7 +166,7 @@ void run(Date* date, Task** tasks, enum runType format) {
 			case 75:
 				// Arrow left
 				if (format != week) update_date(date, -1);
-				else move_task = -1;
+				else move_task = 0;
 				break;
 			case 80:
 				// Arrow down
@@ -171,7 +177,7 @@ void run(Date* date, Task** tasks, enum runType format) {
 			case 77:
 				// Arrow right
 				if (format != week) update_date(date, 1);
-				else move_task = 1;
+				else move_task = 0;
 				break;
 			}
 		}

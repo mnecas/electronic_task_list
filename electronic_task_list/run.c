@@ -10,7 +10,6 @@ Task* get_selected_task(Task** tasks) {
 	return this_task;
 }
 
-
 int get_max_id(Task** tasks) {
 	Task* this_task = *tasks;
 	int resp = 0;
@@ -42,7 +41,7 @@ void on_copy(Date date, Task** tasks) {
 	Task* this_task = get_selected_task(tasks);
 	if (this_task != NULL) {
 		system("cls");
-		Date new_date = date;
+		Date new_date = this_task->date;
 		printf("Day\n");
 		scanf_s("%d", &new_date.tm_mday);
 		printf("Month\n");

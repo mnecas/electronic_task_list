@@ -1,6 +1,5 @@
 #include "common.h"
 
-
 int main()
 {
 	time_t now = time(0);
@@ -10,15 +9,36 @@ int main()
 
 	Task* task = NULL;
 
-	Time duration;
-	duration.hour = 1;
-	duration.min = 20;
-	add_task(0, duration, 0, normal, "test1", date, &task);
-	add_task(1, duration, 0, minimal, "test2", date, &task);
-	add_task(2, duration, 0, minimal, "test3", date, &task);
-	add_task(3, duration, 0, maximal, "test4", date, &task);
+	FILE* file;
+
+	fopen_s(&file, "D:\\data.txt", "r");
+
+	Task input;
+
+    if (file == NULL) {
+		printf("Soubor nebyl nalezen\n");
+		exit(1);
+	}
+	while (fread_s(&input, sizeof(Task), sizeof(Task), 1, file)) {
+		add_task(input.id, input.duration, input.finished, input.priority, input.label, input.date, &task);
+    }
+
+	fclose(file);
 
 	run(&date, &task, day);
 
+
+	fopen_s(&file, "D:\\data.txt", "w");
+	if (file == NULL) {
+		printf("Soubor nebyl nalezen\n");
+		exit(1);
+	}
+
+	while (task) {
+		fwrite(task, sizeof(Task), 1, file);
+		task = task->next;
+	}
+	fclose(file);
+	
 	return 0;
 }

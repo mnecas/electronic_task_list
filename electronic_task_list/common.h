@@ -1,12 +1,4 @@
 #pragma once
-// TODO split to multiple header files and use: 
-/*
-#ifndef HEADERNAME
-#define HEADERNAME
-...
-#endif
-*/
-#include "structs.c"
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>

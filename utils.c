@@ -28,7 +28,7 @@ void add_task(int id, Time duration, int finished, int priority, char* label, Da
 	}
 
 	// Add all variables
-	strcpy_s(new_task->label, STR_SIZE, label);
+	strcpy(new_task->label, label);
 	new_task->duration = duration;
 	new_task->finished = finished;
 	new_task->priority = priority;

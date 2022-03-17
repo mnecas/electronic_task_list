@@ -1,5 +1,3 @@
-#pragma once
-#include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -12,6 +10,7 @@
 #define WHITE_BACK "\x1b[7m"
 #define RESET "\x1b[0m"
 
+#define clear() printf("\033[H\033[J")
 
 typedef struct tm Date;
 
@@ -20,25 +19,25 @@ typedef struct {
 	int min;
 }Time;
 
+typedef enum runType { day, week, month } RunType;
+typedef enum priority { normal, minimal, maximal } Priority;
+
 typedef struct task
 {
 	Date date;
 	int id;
 	Time duration;
-	enum priority priority;
+	Priority priority;
 	char label[32];
 	int finished;
 	struct task* next;
 
 } Task;
 
-enum runType { day, week, month };
-enum priority { normal, minimal, maximal };
-
-void render(Date* date, Task** tasks, enum typeRun format, int move_task);
-void run(Date* date, Task** tasks, enum runType format);
+void render(Date* date, Task** tasks, RunType format, int move_task);
 void add_task(int id, Time duration, int finished, int priority, char* label, Date date, Task** task);
 void del_task(int id, Task** task);
+void run(Date* date, Task** tasks, RunType format);
 
 void update_date(Date* date, int change);
 const char* get_month_name(int month);
